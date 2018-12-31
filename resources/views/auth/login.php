@@ -4,6 +4,9 @@ include_once('resources/views/layouts/layout.php');
 
 ?>
 
+
+
+
 <div id="ModalLogin" class="modal">
   
   <form class="modal-content animate" action="../Pharmacy/login/submit" method="POST">

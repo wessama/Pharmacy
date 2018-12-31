@@ -5,6 +5,10 @@ var_dump( $_SESSION['cartProducts']);
 ?>
 
 
+
+
+
+<div class="container">
    <div class="card shopping-cart">
             <div class="card-header bg-dark text-light">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
