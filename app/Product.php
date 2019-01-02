@@ -22,8 +22,8 @@ class Product
 
 	}
 	
-	public function searchProducts($searchString){
-
+	public function searchProducts($searchString)
+	{
 		$DBConnectionInstance =$this->config->getInstance();
 		$columnName = "product_name	";
 		$tableName = "product";
@@ -32,7 +32,7 @@ class Product
 		if (!is_null($query)) {
 			return $query;
 		} else {
-			return (new Product)->getProducts();
+			return (new Product)->getProducts($category_id);
 		}
    }
 

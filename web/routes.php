@@ -18,11 +18,13 @@ if($_SERVER['REQUEST_URI'] == '/Pharmacy/home')
 
 	$HomeController = new HomeController();
 	
-	if(isset($_POST['searchText'])){
+	if(isset($_POST['searchText']))
+	{
 		$request = $_POST['searchText'];
-		$HomeController->homePageSearch($request);
+		$HomeController->homePageSearch($request);	
 	}
-	else{
+	else
+	{
 		$HomeController->index();
 	}
 }
@@ -77,14 +79,6 @@ else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/products") !== false)
 	
 	$ProductController = new ProductController();
 	
-	if(isset($_POST['searchText'])){
-		$request = $_POST['searchText'];
-		$ProductController->productSearch($request);
-	}
-	else{
-		$ProductController->index();
-	}
-
 	if(isset($_GET['category']))
 	{
 		$request = $_GET['category'];
@@ -94,7 +88,18 @@ else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/products") !== false)
 		$request = 1;
 	}
 
-	$ProductController->index($request);
+	if(isset($_POST['searchText']))
+	{
+		$request = $_POST['searchText'];
+		$ProductController->productSearch($request);
+	}
+	else{
+		$ProductController->index($request);
+	}
+
+	
+
+	// $ProductController->index($request);
 }
 
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/cart')

@@ -20,7 +20,6 @@ class HomeController
 		{
 			$this->config->route('Pharmacy/login');
 		}
-
 		$category = new Category();
 
 		$categories = $category->getCategories();
@@ -31,14 +30,8 @@ class HomeController
 	public function homePageSearch($searchString)
 	{
 		$category = new Category();
-
-
-
-
-
-		
 		$categories = $category->searchCategories($searchString);
-		var_dump($categories);
+		// var_dump($categories);
 		$this->config->view('home', $categories);
 	}
 
