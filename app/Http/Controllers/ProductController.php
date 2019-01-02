@@ -29,5 +29,13 @@ class productController
 
 		$this->config->view('dashboard/product-view', $products);
 	}
+	
+	public function productSearch($searchString)
+	{
+		$Product = new Product();
 
+		$products = $Product->searchProducts($searchString);
+		var_dump($products);
+		$this->config->view('dashboard/product-view', $products);
+	}
 }

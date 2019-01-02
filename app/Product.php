@@ -21,6 +21,20 @@ class Product
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 
 	}
+	
+	public function searchProducts($searchString){
+
+		$DBConnectionInstance =$this->config->getInstance();
+		$columnName = "product_name	";
+		$tableName = "product";
+		
+		$query = $this->config->getSearchResults($DBConnectionInstance , $tableName , $columnName , $searchString); 
+		if (!is_null($query)) {
+			return $query;
+		} else {
+			return (new Product)->getProducts();
+		}
+   }
 
 }
 

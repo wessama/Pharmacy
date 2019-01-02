@@ -1,10 +1,8 @@
 <?php
 
 include('resources/views/layouts/layout.php');
-var_dump( $_SESSION['cartProducts']);
+
 ?>
-
-
 
 
 

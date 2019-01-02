@@ -19,7 +19,21 @@ class Category
 		 $query = $x->query("SELECT * FROM `category`");
 
 		return $query->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
+	public function searchCategories($searchString){
 
+		 $DBConnectionInstance =$this->config->getInstance();
+		 $columnName = "category";
+		 $tableName = "category";
+		 //return query
+		 $query = $this->config->getSearchResults($DBConnectionInstance , $tableName , $columnName , $searchString); 
+		 if (!is_null($query)) {
+			 return $query;
+		 } else {
+			 
+			 return (new Category)->getCategories();
+		 }
 	}
 
 }

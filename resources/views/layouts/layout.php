@@ -27,28 +27,28 @@
 			</ul>
 			<ul class="navbar-nav mr-0">
 				<?php if(isset($_SESSION['user'])){ ?>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<?php isset($_SESSION['user']) ? print($_SESSION['user']) : print('Not logged in'); ?>	
-					</a>
-					<div class="dropdown-menu" aria-labelledby="dropdown04">
-						<a class="dropdown-item" href="#">Profile</a>
-						<a class="dropdown-item" href="#">Settings</a>
-						<a class="dropdown-item" href="<?php echo $GLOBALS['ASSET'].$GLOBALS['logout'] ?>" onclick="event.preventDefault();
-						document.getElementById('logout-form').submit();">Log out</a>
-					</div>
-				</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<?php isset($_SESSION['user']) ? print($_SESSION['user']) : print('Not logged in'); ?>	
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdown04">
+							<a class="dropdown-item" href="#">Profile</a>
+							<a class="dropdown-item" href="#">Settings</a>
+							<a class="dropdown-item" href="<?php echo $GLOBALS['ASSET'].$GLOBALS['logout'] ?>" onclick="event.preventDefault();
+							document.getElementById('logout-form').submit();">Log out</a>
+						</div>
+					</li>
 				<?php }else{ ?>
-				<li class="nav-item">
-					<a class="nav-link" onclick="document.getElementById('ModalLogin').style.display='block'">Log in</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="register">Register</a>
-				</li>
+					<li class="nav-item">
+						<a class="nav-link" onclick="document.getElementById('ModalLogin').style.display='block'">Log in</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="register">Register</a>
+					</li>
 				<?php } ?>
 			</ul>
-			<form class="form-inline my-2 my-lg-0 "method="get"action="#">
-				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+			<form class="form-inline my-2 my-lg-0 "method="post"action="<?php echo  $_SERVER['REQUEST_URI']  ?>">
+				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchText" >
 			</form>  
 		</div>
 	</nav>

@@ -28,4 +28,18 @@ class HomeController
 		$this->config->view('home', $categories);
 	}
 
+	public function homePageSearch($searchString)
+	{
+		$category = new Category();
+
+
+
+
+
+		
+		$categories = $category->searchCategories($searchString);
+		var_dump($categories);
+		$this->config->view('home', $categories);
+	}
+
 }
