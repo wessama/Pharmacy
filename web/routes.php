@@ -81,20 +81,20 @@ else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/products") !== false)
 	
 	if(isset($_GET['category']))
 	{
-		$request = $_GET['category'];
+		$categoryid = $_GET['category'];
 	}
 	else
 	{
-		$request = 1;
+		$categoryid = 1;
 	}
 
 	if(isset($_POST['searchText']))
 	{
-		$request = $_POST['searchText'];
-		$ProductController->productSearch($request);
+		$searchtext = $_POST['searchText'];
+		$ProductController->productSearch($searchtext,$categoryid);
 	}
 	else{
-		$ProductController->index($request);
+		$ProductController->index($categoryid);
 	}
 
 	

@@ -17,18 +17,18 @@ class Product
 		$product =$this->config->getInstance();
 
 		$query = $product->query("SELECT * FROM `product` WHERE `category_id` = '$category_id'");
-
+		
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 
 	}
 	
-	public function searchProducts($searchString)
+	public function searchProducts($searchString,$category_id)
 	{
-		$DBConnectionInstance =$this->config->getInstance();
-		$columnName = "product_name	";
+		// $DBConnectionInstance =$this->config->getInstance();
+		$columnName = "product_name";
 		$tableName = "product";
-		
-		$query = $this->config->getSearchResults($DBConnectionInstance , $tableName , $columnName , $searchString); 
+		$product =$this->config->getInstance();
+		$query = $product->query("SELECT * FROM `$tableName` WHERE `category_id` = '$category_id' AND `$columnName` LIKE '%$searchString%'");
 		if (!is_null($query)) {
 			return $query;
 		} else {

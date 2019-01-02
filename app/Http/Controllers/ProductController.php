@@ -30,12 +30,11 @@ class productController
 		$this->config->view('dashboard/product-view', $products);
 	}
 	
-	public function productSearch($searchString)
+	public function productSearch($searchString,$categoryid)
 	{
 		$Product = new Product();
 
-		$products = $Product->searchProducts($searchString);
-		var_dump($products);
+		$products = $Product->searchProducts($searchString,$categoryid);
 		$this->config->view('dashboard/product-view', $products);
 	}
 }
