@@ -7,9 +7,8 @@ class User
 	protected $config;
 
 	public function __construct(){
-
+		
 		$this->config = new Controller();
-
 	}
 
 	public function getInfo($email)
@@ -20,6 +19,17 @@ class User
 
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
+	
+	public function getInfoById($id)
+	{
+
+		$User = $this->config->getInstance();
+
+		$query = $User->query("SELECT * FROM `user` WHERE `id` = '$id'");
+		var_dump($query);
+		return $query->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 
 	public function store($request)
 	{

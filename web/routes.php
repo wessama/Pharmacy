@@ -12,6 +12,9 @@ $GLOBALS['cart'] = "user/cart";
 
 $GLOBALS['product'] = "products";
 
+$GLOBALS['profile'] = "profile";
+
+
 if($_SERVER['REQUEST_URI'] == '/Pharmacy/home')
 {
 	$config->getController('HomeController');
@@ -23,10 +26,35 @@ if($_SERVER['REQUEST_URI'] == '/Pharmacy/home')
 		$request = $_POST['searchText'];
 		$HomeController->homePageSearch($request);	
 	}
-	else
-	{
+	else{
 		$HomeController->index();
 	}
+}
+
+
+else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/products") !== false)
+{
+	$config->getController('ProductController');
+	
+	$ProductController = new ProductController();
+	
+	if(isset($_GET['category']))
+	{
+		$categoryid = $_GET['category'];
+	}
+	else{
+		$categoryid = 1;
+	}
+
+	if(isset($_POST['searchText']))
+	{
+		$searchtext = $_POST['searchText'];
+		$ProductController->productSearch($searchtext,$categoryid);
+	}
+	else{
+		$ProductController->index($categoryid);
+	}
+	// $ProductController->index($request);
 }
 
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/register')
@@ -36,6 +64,16 @@ else if($_SERVER['REQUEST_URI'] == '/Pharmacy/register')
 	$RegisterController = new RegisterController();
 	
 	$RegisterController->index();
+}
+else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/profile") !== false)
+{
+	$request = $_POST;
+	
+	$config->getController('UserController');
+	
+	$UserController = new UserController();
+	
+	$UserController->index();
 }
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/register/save')
 {
@@ -51,12 +89,13 @@ else if($_SERVER['REQUEST_URI'] == '/Pharmacy/register/save')
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/login/submit')
 {
 	$request = $_POST;
-	
+
 	$config->getController('LoginController');
 	
 	$LoginController = new LoginController();
 	
 	$LoginController->logIn($request);
+		
 }
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/login')
 {
@@ -73,34 +112,6 @@ else if($_SERVER['REQUEST_URI'] == '/Pharmacy/logout')
 	$config->route('Pharmacy/home');
 	
 }
-else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/products") !== false)
-{
-	$config->getController('ProductController');
-	
-	$ProductController = new ProductController();
-	
-	if(isset($_GET['category']))
-	{
-		$categoryid = $_GET['category'];
-	}
-	else
-	{
-		$categoryid = 1;
-	}
-
-	if(isset($_POST['searchText']))
-	{
-		$searchtext = $_POST['searchText'];
-		$ProductController->productSearch($searchtext,$categoryid);
-	}
-	else{
-		$ProductController->index($categoryid);
-	}
-
-	
-
-	// $ProductController->index($request);
-}
 
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/cart')
 {
@@ -116,10 +127,7 @@ else if($_SERVER['REQUEST_URI'] == '/Pharmacy/Product/add')
 	{
 		$_SESSION['cartProducts'][] = $request['product_id'];
 	}
-	else
-	{
-		echo "<script>alert('Product already exists in cart');</script>";
-	}
+	else{ echo "<script>alert('Product already exists in cart');</script>"; }
 
 	$config->route('products');
 }

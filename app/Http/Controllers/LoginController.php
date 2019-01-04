@@ -27,13 +27,15 @@ class LoginController
 
 		$data = $User->getInfo($email);
 
+		//if correct password
 		if(password_verify($password, $data[0]['password'])){
 			
 			$this->config->route('home');
 
 			$_SESSION['user'] = $data[0]['name'];
-		}else
-		{
+			$_SESSION['userid'] = $data[0]['id'];
+			
+		}else{
             echo "<script>alert('Wrong Username or Password');</script>";		
 	    }
 
