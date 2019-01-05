@@ -59,6 +59,19 @@ class User
 								WHERE u.id = '$id'");
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
+	public function pharmacistTable($id)
+	{
+		$User = $this->config->getInstance();
+		$query = $User->query("SELECT u.id, u.name , u.email ,o.id , o.`created-at` , s.status_name 
+								FROM `order`o 
+								INNER JOIN `user`u 
+								INNER JOIN `status`s 
+								ON o.user_id = u.id AND
+								o.status_id = s.statusId
+								WHERE u.role_id =3");
+		return $query->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 
 	public function store($request)
 	{

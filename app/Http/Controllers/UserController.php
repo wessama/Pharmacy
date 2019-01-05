@@ -13,7 +13,6 @@ class UserController
 
 	public function __construct()
 	{
-
 		$this->config = new Controller();
 	}
 
@@ -27,12 +26,11 @@ class UserController
 			$this->config->route('Pharmacy/login');
 		}
 		$User = new User();
-
+		
 		$data = $User->getAllInfo($id);
-		// $data2 = $User->get_order_product_details($id);
-
-
-		$this->config->view('dashboard/userProfileView' , $data);	
+		$pharmacistTable = $User->pharmacistTable($_SESSION['userid']);
+		
+		$this->config->view1('dashboard/userProfileView' , $data ,$pharmacistTable );	
 	}
 	// public function getUserOrder()
 	// {
@@ -47,3 +45,8 @@ class UserController
 	// 	$data = $User->get_order_product_details($id);
 	// }
 }
+		// $data = array(
+		// 				array( $User->getAllInfo($id))
+		// 			);
+		
+		// $data2 = $User->get_order_product_details($id);
