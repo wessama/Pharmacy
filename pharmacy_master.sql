@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2018 at 04:17 PM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Generation Time: Jan 05, 2019 at 07:38 PM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,8 +30,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
-  `category` varchar(255) NOT NULL
+  `category` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `category`, `image`) VALUES
+(1, 'Tablets', 'public\\images\\tablets.png'),
+(2, 'Capsules', 'public\\images\\Capsules.jpg'),
+(3, 'Liquids', 'public\\images\\Liquids.jpg');
 
 -- --------------------------------------------------------
 
@@ -67,6 +77,14 @@ CREATE TABLE `order` (
   `status_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`id`, `product_id`, `user_id`, `created-at`, `updated_at`, `status_id`) VALUES
+(1, 1, 1, '2019-01-04 14:02:30', '0000-00-00 00:00:00', 2),
+(2, 2, 1, '2019-01-05 14:27:10', '0000-00-00 00:00:00', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -101,8 +119,18 @@ CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
-  `quantity` int(255) NOT NULL
+  `product_image` varchar(255) NOT NULL,
+  `quantity` int(255) NOT NULL,
+  `price` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `category_id`, `product_name`, `product_image`, `quantity`, `price`) VALUES
+(1, 1, 'Panadol', 'public\\images\\panadol.jpg', 100, 20),
+(2, 1, 'augmentin', 'public\\images\\augmentin.jpg', 100, 20);
 
 -- --------------------------------------------------------
 
@@ -144,10 +172,19 @@ INSERT INTO `role` (`id`, `name`, `displayName`) VALUES
 --
 
 CREATE TABLE `status` (
-  `id` int(11) NOT NULL,
+  `statusId` int(11) NOT NULL,
   `code` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
+  `status_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `status`
+--
+
+INSERT INTO `status` (`statusId`, `code`, `status_name`) VALUES
+(1, 1, 'Completed'),
+(2, 2, 'Pending'),
+(3, 3, 'Cancelled');
 
 -- --------------------------------------------------------
 
@@ -171,12 +208,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `gender_id`, `avatar`, `role_id`, `created_at`) VALUES
-(1, 'name', 'email', 'password', 1, 'users/default.png', 3, '2018-12-04 15:04:52'),
-(2, 'name', 'email', 'password', 1, 'users/default.png', 3, '2018-12-04 15:05:04'),
-(3, 'Farida', 'farida@gmail.com', '', 1, 'users/default.png', 3, '2018-12-04 15:11:49'),
-(4, 'Farida', 'wessam1512779@miuegypt.edu.eg', '', 1, 'users/default.png', 3, '2018-12-04 15:12:05'),
-(5, 'Farida', 'wessam1512779@miuegypt.edu.eg', '', 1, 'users/default.png', 3, '2018-12-04 15:12:24'),
-(6, 'Wessam', 'wessam1512779@miuegypt.edu.eg', '$2y$10$QsAlFHHzl8081BYhbw.gw.rR7vOJXbpnuLsH0hPlA4scNAKu10XUq', 1, 'users/default.png', 3, '2018-12-04 15:13:39');
+(1, 'mohamed', 'zahaby@gmail.com', '$2y$10$RiReY2stTQqkaeyRphcGy./TKTbMKIJFZN50but5hsJdCYMLT5CqS', 1, 'public\\images\\default.png', 3, '2019-01-05 12:27:39');
 
 --
 -- Indexes for dumped tables
@@ -243,7 +275,7 @@ ALTER TABLE `role`
 -- Indexes for table `status`
 --
 ALTER TABLE `status`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`statusId`);
 
 --
 -- Indexes for table `user`
@@ -261,7 +293,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `gender`
@@ -273,7 +305,7 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `permission`
@@ -291,7 +323,7 @@ ALTER TABLE `permission_role`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `request`
@@ -309,13 +341,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `statusId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -326,7 +358,7 @@ ALTER TABLE `user`
 --
 ALTER TABLE `order`
   ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`),
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`statusId`),
   ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
