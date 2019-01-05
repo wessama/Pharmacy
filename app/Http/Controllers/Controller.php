@@ -22,6 +22,10 @@ class Controller
 	{
 		include('resources/views/'.$path.".php");
 	}
+	public function view1($path, $data1 = array() ,$data2 = array())
+	{
+		include('resources/views/'.$path.".php");
+	}
 
 	public function route($routeName)
 	{

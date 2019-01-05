@@ -19,6 +19,7 @@ class UserController
 
 	public function index()
 	{
+		$id = $_SESSION['userid'];
 		// header('Location: ../resources/views/home.php');
 		
 		if(!isset($_SESSION['user']))
@@ -27,9 +28,22 @@ class UserController
 		}
 		$User = new User();
 
-		var_dump($_SESSION['userid']);
-		$data = $User->getInfoById($_SESSION['userid']);
+		$data = $User->getAllInfo($id);
+		// $data2 = $User->get_order_product_details($id);
+
 
 		$this->config->view('dashboard/userProfileView' , $data);	
 	}
+	// public function getUserOrder()
+	// {
+	// 	$id = $_SESSION['userid'];
+		
+	// 	if(!isset($_SESSION['user']))
+	// 	{
+	// 		$this->config->route('Pharmacy/login');
+	// 	}
+	// 	$User = new User();
+
+	// 	$data = $User->get_order_product_details($id);
+	// }
 }

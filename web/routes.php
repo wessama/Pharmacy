@@ -31,7 +31,6 @@ if($_SERVER['REQUEST_URI'] == '/Pharmacy/home')
 	}
 }
 
-
 else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/products") !== false)
 {
 	$config->getController('ProductController');
@@ -74,6 +73,9 @@ else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/profile") !== false)
 	$UserController = new UserController();
 	
 	$UserController->index();
+	// $UserController->getUserOrder();
+	
+	
 }
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/register/save')
 {

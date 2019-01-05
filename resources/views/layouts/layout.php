@@ -8,20 +8,19 @@
 	<link rel="stylesheet" href="public/css/styles.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Material Design Bootstrap</title>
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
     <!-- Bootstrap core CSS -->
-    <link href="C:/xampp/htdocs/Pharmacy/public/css/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../public/css/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
-    <link href="C:/xampp/htdocs/Pharmacy/public/css/css/mdb.min.css" rel="stylesheet">
+    <link href="../public/css/css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
-    <link href="C:/xampp/htdocs/Pharmacy/public/css/css/style.css" rel="stylesheet">
+    <link href="../public/css/css/style.css" rel="stylesheet">
     <!-- MDBootstrap Datatables  -->
-  <link href="C:/xampp/htdocs/Pharmacy/public/css/css/addons/datatables.min.css" rel="stylesheet">
+  <link href="../public/css/css/addons/datatables.min.css" rel="stylesheet">
 </head>
 <body background="public/images/wallpaper2.jpg">
 
