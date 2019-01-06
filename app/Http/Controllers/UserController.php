@@ -6,7 +6,7 @@ require_once('app/Http/Controllers/Controller.php');
 require('app/User.php');
 
 
-class ProfileController
+class UserController
 {
 	private $config;
 

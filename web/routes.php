@@ -70,11 +70,11 @@ else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/profile") !== false)
 {
 	$request = $_POST;
 	
-	$config->getController('ProfileController');
+	$config->getController('UserController');
 	
-	$ProfileController = new ProfileController();
+	$UserController = new UserController();
 	
-	$ProfileController->index();	
+	$UserController->index();	
 }
 else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/ordersHistory") !== false)
 {
