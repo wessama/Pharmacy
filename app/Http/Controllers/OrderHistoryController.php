@@ -6,31 +6,33 @@ require_once('app/Http/Controllers/Controller.php');
 require('app/User.php');
 
 
-class UserController
+class OrderHistoryController
 {
 	private $config;
 
 
-	public function __construct()
-	{
+	public function __construct(){
 		$this->config = new Controller();
 	}
 
 	public function index()
 	{
 		$id = $_SESSION['userid'];
-		// header('Location: ../resources/views/home.php');
 		
 		if(!isset($_SESSION['user']))
 		{
 			$this->config->route('Pharmacy/login');
 		}
 		$User = new User();
-		
-		$data = $User->getAllInfo($id);
-		$pharmacistTable = $User->pharmacistTable($_SESSION['userid']);
-		
-		$this->config->view1('dashboard/userProfileView' , $data ,$pharmacistTable );	
+		$role = $User->getUserTypeNumber($id);
+		var_dump($role);
+		if ($role[0]["role_id"] == 3) {
+			
+			$data = $User->getAllInfo($id);
+		}
+		$this->config->view('dashboard/orderHistoryView' , $data);	
+		// $pharmacistTable = $User->pharmacistTable($_SESSION['userid']);
+		// $this->config->view1('dashboard/orderHistoryView' , $data ,$pharmacistTable );	
 	}
 	// public function getUserOrder()
 	// {

@@ -47,6 +47,7 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdown04">
 							<a class="dropdown-item" href="<?php echo $GLOBALS['ASSET'].$GLOBALS['profile']?>">Profile</a>
+							<a class="dropdown-item" href="<?php echo $GLOBALS['ASSET'].$GLOBALS['ordersHistory']?>">orders History</a>
 							<a class="dropdown-item" href="#">Settings</a>
 							<a class="dropdown-item" href="<?php echo $GLOBALS['ASSET'].$GLOBALS['logout'] ?>" onclick="event.preventDefault();
 							document.getElementById('logout-form').submit();">Log out</a>

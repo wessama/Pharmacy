@@ -20,11 +20,10 @@ class User
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
-	public function getUserInfoById($id)
+	public function getUserInfo($id)
 	{
 		$User = $this->config->getInstance();
 		$query = $User->query("SELECT * FROM gender INNER JOIN user ON gender.id=user.gender_id WHERE user.id = '$id'");
-		var_dump($query);
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
@@ -72,6 +71,12 @@ class User
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	public function getUserTypeNumber($userId)
+	{
+		$role = $this->config->getInstance();
+		$query = $role->query("SELECT `role_id` FROM `user` WHERE `id`='$userId'");
+		return $query->fetchAll(PDO::FETCH_ASSOC);
+	}
 
 	public function store($request)
 	{

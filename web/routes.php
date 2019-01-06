@@ -14,6 +14,8 @@ $GLOBALS['product'] = "products";
 
 $GLOBALS['profile'] = "profile";
 
+$GLOBALS['ordersHistory'] = "ordersHistory";
+
 
 if($_SERVER['REQUEST_URI'] == '/Pharmacy/home')
 {
@@ -68,14 +70,21 @@ else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/profile") !== false)
 {
 	$request = $_POST;
 	
-	$config->getController('UserController');
+	$config->getController('ProfileController');
 	
-	$UserController = new UserController();
+	$ProfileController = new ProfileController();
 	
-	$UserController->index();
-	// $UserController->getUserOrder();
+	$ProfileController->index();	
+}
+else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/ordersHistory") !== false)
+{
+	$request = $_POST;
 	
+	$config->getController('OrderHistoryController');
 	
+	$OrderHistoryController = new OrderHistoryController();
+	
+	$OrderHistoryController->index();	
 }
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/register/save')
 {
