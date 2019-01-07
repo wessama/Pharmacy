@@ -27,17 +27,6 @@ class User
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
-	public function get_order_product_details($id)
-	{
-		$User = $this->config->getInstance();
-		$query = $User->query("SELECT * 
-								FROM `order`
-								INNER JOIN `product` 
-								INNER JOIN `user` 
-								ON order.product_id=product.id && order.user_id = user.id
-								WHERE user.id =  '$id'");
-		return $query->fetchAll(PDO::FETCH_ASSOC);
-	}
 	//user Table
 	public function getUserTable($id)
 	{
