@@ -30,17 +30,19 @@ class User
 	public function get_order_product_details($id)
 	{
 		$User = $this->config->getInstance();
-		$query = $User->query("SELECT * FROM `order`INNER JOIN `product` INNER JOIN `user` ON 
-		order.product_id=product.id
-		&& 
-		order.user_id = user.id
-		WHERE user.id =  '$id'");
+		$query = $User->query("SELECT * 
+								FROM `order`
+								INNER JOIN `product` 
+								INNER JOIN `user` 
+								ON order.product_id=product.id && order.user_id = user.id
+								WHERE user.id =  '$id'");
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
-	public function getAllInfo($id)
+	//user Table
+	public function getUserTable($id)
 	{
 		$User = $this->config->getInstance();
-		$query = $User->query("SELECT * 
+		$query = $User->query("SELECT o.id , p.product_name , p.quantity , p.price , c.category , o.`created-at`
 								FROM `order`o 
 								INNER JOIN  `user` u 
 								INNER JOIN `product`p 
@@ -56,11 +58,15 @@ class User
 									(c.id = p.category_id)
 								) 
 								WHERE u.id = '$id'");
+
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
-	public function pharmacistTable($id)
+	
+	//pharmacist Table
+	public function getPharmacistTable($id)
 	{
 		$User = $this->config->getInstance();
+		
 		$query = $User->query("SELECT u.id, u.name , u.email ,o.id , o.`created-at` , s.status_name 
 								FROM `order`o 
 								INNER JOIN `user`u 
@@ -68,15 +74,12 @@ class User
 								ON o.user_id = u.id AND
 								o.status_id = s.statusId
 								WHERE u.role_id =3");
+		
+										
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	public function getUserTypeNumber($userId)
-	{
-		$role = $this->config->getInstance();
-		$query = $role->query("SELECT `role_id` FROM `user` WHERE `id`='$userId'");
-		return $query->fetchAll(PDO::FETCH_ASSOC);
-	}
+	
 
 	public function store($request)
 	{
@@ -87,6 +90,7 @@ class User
 		$gender = $request['gender'];
 		//standard query builder
 		$User->query("INSERT INTO `user`(`name`, `email`, `password`, `gender_id`, `role_id`) VALUES ('$firstname', '$email', '$password', '$gender', 3)");
+		
 	}
 
 }

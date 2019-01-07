@@ -1,9 +1,7 @@
 <?php
-
-
-// require('app/dependencies/PDOConnection.php');
 require_once('app/Http/Controllers/Controller.php');
 require('app/User.php');
+require('app/Role.php');
 
 
 class OrderHistoryController
@@ -24,31 +22,25 @@ class OrderHistoryController
 			$this->config->route('Pharmacy/login');
 		}
 		$User = new User();
-		$role = $User->getUserTypeNumber($id);
-		var_dump($role);
-		if ($role[0]["role_id"] == 3) {
-			
-			$data = $User->getAllInfo($id);
-		}
+		$Role = new Role();
+		$roleID = $Role->getUserTypeNumber($id);
+		//in case u want to see pharmacist table for testing ... uncomment the next line
+		// $roleID[0]["role_id"] = 2;
+		if ($roleID[0]["role_id"] == 3) 
+		{
+			$query = $User->getUserTable($id);	
+			$culomnNames = array("Order Number", "Produt Name", "Product Quantity", "Product Price", "Product Category","Order Date");
+		}			
+		else if ($roleID[0]["role_id"] == 2) 
+		{
+			$query = $User->getPharmacistTable($id);
+			$culomnNames = array("Order Number", "user Name", "user email","Order Date" , "status");
+		}			
+		$data = array( $culomnNames , $query);
 		$this->config->view('dashboard/orderHistoryView' , $data);	
-		// $pharmacistTable = $User->pharmacistTable($_SESSION['userid']);
-		// $this->config->view1('dashboard/orderHistoryView' , $data ,$pharmacistTable );	
+		
 	}
-	// public function getUserOrder()
-	// {
-	// 	$id = $_SESSION['userid'];
-		
-	// 	if(!isset($_SESSION['user']))
-	// 	{
-	// 		$this->config->route('Pharmacy/login');
-	// 	}
-	// 	$User = new User();
-
-	// 	$data = $User->get_order_product_details($id);
-	// }
 }
-		// $data = array(
-		// 				array( $User->getAllInfo($id))
-		// 			);
-		
-		// $data2 = $User->get_order_product_details($id);
+
+
+
