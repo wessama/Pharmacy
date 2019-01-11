@@ -8,13 +8,17 @@ $GLOBALS['home'] = "home";
 
 $GLOBALS['logout'] = "logout";
 
-$GLOBALS['cart'] = "user/cart";
+$GLOBALS['cart'] = "cart";
 
 $GLOBALS['product'] = "products";
 
 $GLOBALS['profile'] = "profile";
 
 $GLOBALS['ordersHistory'] = "ordersHistory";
+
+$GLOBALS['checkout'] = "checkout";
+
+$GLOBALS['addProduct'] = "Product/add";
 
 
 if($_SERVER['REQUEST_URI'] == '/Pharmacy/home')
@@ -55,7 +59,6 @@ else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/products") !== false)
 	else{
 		$ProductController->index($categoryid);
 	}
-	// $ProductController->index($request);
 }
 
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/register')
@@ -108,6 +111,17 @@ else if($_SERVER['REQUEST_URI'] == '/Pharmacy/login/submit')
 	$LoginController->logIn($request);
 		
 }
+else if($_SERVER['REQUEST_URI'] == '/Pharmacy/checkout/submit')
+{
+	$request = $_POST;
+
+	$config->getController('CheckoutController');
+	
+	$CheckoutController = new CheckoutController();
+	
+	$CheckoutController->store($request);
+		
+}
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/login')
 {
 	$config->getController('LoginController');
@@ -128,7 +142,22 @@ else if($_SERVER['REQUEST_URI'] == '/Pharmacy/cart')
 {
 	$config->getController('CartController');
  	$cartController = new CartController();
- 	$cartController->index();
+	  $cartController->addToCart();
+	  
+	  if(isset($_POST['UpdateButton']))
+	{
+		$quantity = $_GET['quantity'];
+		$Productprice = $_GET['Productprice'];
+		$orderPrice = $_GET['orderPrice'];
+		$orderTotalPrice = $_GET['orderTotalPrice'];
+		$cartController->update($quantity,$Productprice,$orderPrice,$orderTotalPrice);
+	}
+}
+else if($_SERVER['REQUEST_URI'] == '/Pharmacy/checkout')
+{
+	$config->getController('CheckoutController');
+ 	$checkoutController = new CheckoutController();
+ 	$checkoutController->index();
 }
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/Product/add')
 {
@@ -138,7 +167,12 @@ else if($_SERVER['REQUEST_URI'] == '/Pharmacy/Product/add')
 	{
 		$_SESSION['cartProducts'][] = $request['product_id'];
 	}
-	else{ echo "<script>alert('Product already exists in cart');</script>"; }
-
-	$config->route('products');
+	else
+	{ 
+		$message = "Product already exists in cart";
+		echo "<script type='text/javascript'>alert('$message');</script>";
+	}
+	
+	 $config->route('products');
+	
 }

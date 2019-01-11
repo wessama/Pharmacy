@@ -19,12 +19,10 @@ class Product
 		$query = $product->query("SELECT * FROM `product` WHERE `category_id` = '$category_id'");
 		
 		return $query->fetchAll(PDO::FETCH_ASSOC);
-
 	}
 	
 	public function searchProducts($searchString,$category_id)
 	{
-		// $DBConnectionInstance =$this->config->getInstance();
 		$columnName = "product_name";
 		$tableName = "product";
 		$product =$this->config->getInstance();

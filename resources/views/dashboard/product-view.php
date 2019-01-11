@@ -12,7 +12,7 @@ include('resources/views/layouts/layout.php');
             <div class="card-body" >
                 <h5 class="card-title"style="color:blue"><?php echo $product['product_name'] ?></h5>
             </div>
-            <form action="../Pharmacy/Product/add" method="POST">
+            <form action="<?php echo $GLOBALS['ASSET'].$GLOBALS['addProduct']?>" method="POST">
                 <input type="hidden" name="product_id" value="<?php echo $product['id'] ?>">
                 <button type="submit" class="btn-primary">Add to cart</button>
             </form>
