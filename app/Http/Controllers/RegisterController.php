@@ -20,9 +20,24 @@ class RegisterController
 
 	public function store($request)
 	{
+
 		$User = new User();
+		
+		if($User->getInfoByEmail($request['email']) != NULL) {
+
+			$_SESSION['user_already_exists'] = true;
+
+			$this->config->route('login');
+
+		}else{
 
 		$User->store($request);
+
+		$_SESSION['registration_successful'];
+
+		$this->config->route('home');
+		
+		}
 
 	}
 }

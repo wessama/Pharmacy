@@ -3,6 +3,7 @@
 
 require('app/dependencies/PDOConnection.php');
 
+
 class Controller
 {
 
@@ -31,8 +32,6 @@ class Controller
 
 	public function getSearchResults($DBobject,$tableName , $columnName , $searchString)
 	{
-		// $DBobject =$this->config->getInstance();
-
 		$query = $DBobject->query("SELECT * FROM `$tableName` WHERE `$columnName` LIKE '%$searchString%'");
 
 		return $query->fetchAll(PDO::FETCH_ASSOC);

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2019 at 09:13 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.4
+-- Generation Time: Jan 13, 2019 at 08:54 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,58 @@ SET time_zone = "+00:00";
 --
 -- Database: `pharmacy_master`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `billing`
+--
+
+CREATE TABLE `billing` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `Address` varchar(60) NOT NULL,
+  `City` varchar(60) NOT NULL,
+  `Zip` int(5) NOT NULL,
+  `NameOnCard` varchar(60) NOT NULL,
+  `CreditCardNumber` int(20) NOT NULL,
+  `ExpMonth` varchar(15) NOT NULL,
+  `ExpYear` int(4) NOT NULL,
+  `CVV` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `billing`
+--
+
+INSERT INTO `billing` (`id`, `user_id`, `Address`, `City`, `Zip`, `NameOnCard`, `CreditCardNumber`, `ExpMonth`, `ExpYear`, `CVV`) VALUES
+(2, 7, '', '', 0, '', 0, '', 0, 0),
+(3, 7, '', '', 0, '', 0, '', 0, 0),
+(4, 7, '', '', 0, '', 0, '', 0, 0),
+(5, 7, '', '', 0, '', 0, '', 0, 0),
+(6, 7, '', '', 0, '', 0, '', 0, 0),
+(7, 7, '', '', 0, '', 0, '', 0, 0),
+(8, 7, '', '', 0, '', 0, '', 0, 0),
+(9, 7, '', '', 0, '', 0, '', 0, 0),
+(10, 7, '', '', 0, '', 0, '', 0, 0),
+(11, 7, '', '', 0, '', 0, '', 0, 0),
+(12, 7, '', '', 0, '', 0, '', 0, 0),
+(13, 7, '', '', 0, '', 0, '', 0, 0),
+(14, 7, '', '', 0, '', 0, '', 0, 0),
+(15, 7, '', '', 0, '', 0, '', 0, 0),
+(16, 7, '', '', 0, '', 0, '', 0, 0),
+(17, 7, '', '', 0, '', 0, '', 0, 0),
+(18, 7, '', '', 0, '', 0, '', 0, 0),
+(19, 7, '', '', 0, '', 0, '', 0, 0),
+(20, 7, '', '', 0, '', 0, '', 0, 0),
+(21, 7, '', '', 0, '', 0, '', 0, 0),
+(22, 7, '', '', 0, '', 0, '', 0, 0),
+(23, 7, '', '', 0, '', 0, '', 0, 0),
+(24, 7, '', '', 0, '', 0, '', 0, 0),
+(25, 7, '', '', 0, '', 0, '', 0, 0),
+(26, 7, '', '', 0, '', 0, '', 0, 0),
+(27, 7, '', '', 0, '', 0, '', 0, 0),
+(28, 7, '', '', 0, '', 0, '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -42,34 +94,6 @@ INSERT INTO `category` (`id`, `category`, `image`) VALUES
 (1, 'Tablets', 'public\\images\\tablets.png'),
 (2, 'Capsules', 'public\\images\\Capsules.jpg'),
 (3, 'Liquids', 'public\\images\\Liquids.jpg');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `checkout`
---
-
-CREATE TABLE `checkout` (
-  `id` int(11) NOT NULL,
-  `FullName` varchar(60) NOT NULL,
-  `Email` varchar(60) NOT NULL,
-  `Address` varchar(60) NOT NULL,
-  `City` varchar(60) NOT NULL,
-  `State` varchar(11) NOT NULL,
-  `Zip` int(5) NOT NULL,
-  `NameOnCard` varchar(60) NOT NULL,
-  `CreditCardNumber` int(20) NOT NULL,
-  `ExpMonth` varchar(15) NOT NULL,
-  `ExpYear` int(4) NOT NULL,
-  `CVV` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `checkout`
---
-
-INSERT INTO `checkout` (`id`, `FullName`, `Email`, `Address`, `City`, `State`, `Zip`, `NameOnCard`, `CreditCardNumber`, `ExpMonth`, `ExpYear`, `CVV`) VALUES
-(6, 'mohamed', 'mohamedazahaby@hotmail.com', 'mmddmddd', 'cairo', 'ny', 10001, 'mohamedt', 2147483647, 'September', 2018, 352);
 
 -- --------------------------------------------------------
 
@@ -100,23 +124,20 @@ CREATE TABLE `order` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `created-at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `status_id` int(11) NOT NULL,
-  `checkout_id` int(11) NOT NULL,
+  `billing_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL DEFAULT '1',
-  `orderPrice` int(11) NOT NULL,
-  `orderTotalPrice` int(11) NOT NULL
+  `product_price` int(11) NOT NULL,
+  `created-at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`id`, `product_id`, `user_id`, `created-at`, `updated_at`, `status_id`, `checkout_id`, `quantity`, `orderPrice`, `orderTotalPrice`) VALUES
-(1, 1, 1, '2019-01-11 02:23:19', '0000-00-00 00:00:00', 2, 0, 3, 2, 20),
-(2, 2, 1, '2019-01-11 02:03:55', '0000-00-00 00:00:00', 2, 0, 0, 10, 10),
-(3, 2, 2, '2019-01-11 00:25:54', '0000-00-00 00:00:00', 2, 0, 1, 0, 0);
+INSERT INTO `order` (`id`, `product_id`, `user_id`, `status_id`, `billing_id`, `quantity`, `product_price`, `created-at`, `updated_at`) VALUES
+(1, 1, 7, 2, 28, 1, 20, '2019-01-13 19:53:04', '2019-01-13 19:53:04');
 
 -- --------------------------------------------------------
 
@@ -130,6 +151,13 @@ CREATE TABLE `permission` (
   `permission` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `permission`
+--
+
+INSERT INTO `permission` (`id`, `role_id`, `permission`) VALUES
+(1, 1, 'mmkn_yfsha5_el_website');
+
 -- --------------------------------------------------------
 
 --
@@ -141,6 +169,13 @@ CREATE TABLE `permission_role` (
   `permission_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `permission_role`
+--
+
+INSERT INTO `permission_role` (`id`, `permission_id`, `role_id`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -163,8 +198,8 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `category_id`, `product_name`, `product_image`, `quantity`, `price`, `Product_description`) VALUES
-(1, 1, 'Panadol', 'public\\images\\panadol.jpg', 100, 20, ''),
-(2, 1, 'augmentin', 'public\\images\\augmentin.jpg', 100, 20, '');
+(1, 1, 'Panadol', 'public\\images\\panadol.jpg', 100, 20, 'Soda3'),
+(2, 1, 'augmentin', 'public\\images\\augmentin.jpg', 100, 20, 'Emask');
 
 -- --------------------------------------------------------
 
@@ -243,24 +278,26 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `code`, `name`, `email`, `password`, `gender_id`, `avatar`, `role_id`, `created_at`) VALUES
-(1, 1, 'mohamed', 'zahaby@gmail.com', '$2y$10$RiReY2stTQqkaeyRphcGy./TKTbMKIJFZN50but5hsJdCYMLT5CqS', 1, 'public\\images\\default.png', 3, '2019-01-07 00:02:54'),
+(1, 1, 'mohamed', 'zahaby@gmail.com', '$2y$10$33Qp5c5nVtguSqrMaU9LKei.JaZcZdbZAoRwOyL8spJcjClTcZB5K', 1, 'public\\images\\default.png', 3, '2019-01-13 15:44:19'),
 (2, 0, 'wessam', 'wessam@gmail.com', '$2y$10$IxevR5p9jlBRoKsdlVo4melY5kLLTW/riLydWu1.RDR0u1V4ahQOK', 1, 'public\\images\\default.png', 3, '2019-01-07 00:15:38'),
-(6, 0, 'ahmed', 'aaaaaaaa@kk.com', '$2y$10$KLOdB7eXcoFt6T82o3ger.epQrG9xgsOGJDesjoYePkCI7.GKNnJm', 1, 'public\\images\\default.png', 3, '2019-01-07 17:42:47');
+(6, 0, 'ahmed', 'aaaaaaaa@kk.com', '$2y$10$KLOdB7eXcoFt6T82o3ger.epQrG9xgsOGJDesjoYePkCI7.GKNnJm', 1, 'public\\images\\default.png', 3, '2019-01-07 17:42:47'),
+(7, 0, 'farida', 'farida@gmail.com', '$2y$10$33Qp5c5nVtguSqrMaU9LKei.JaZcZdbZAoRwOyL8spJcjClTcZB5K', 2, 'public\\images\\default.png', 3, '2019-01-13 14:38:33');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `billing`
+--
+ALTER TABLE `billing`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `checkout`
---
-ALTER TABLE `checkout`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -277,7 +314,7 @@ ALTER TABLE `order`
   ADD KEY `productId` (`product_id`),
   ADD KEY `userId` (`user_id`),
   ADD KEY `status_id` (`status_id`),
-  ADD KEY `checkout_id` (`checkout_id`);
+  ADD KEY `billing_id` (`billing_id`) USING BTREE;
 
 --
 -- Indexes for table `permission`
@@ -334,16 +371,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `billing`
+--
+ALTER TABLE `billing`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `checkout`
---
-ALTER TABLE `checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `gender`
@@ -355,19 +392,19 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `permission_role`
 --
 ALTER TABLE `permission_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -397,11 +434,17 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `billing`
+--
+ALTER TABLE `billing`
+  ADD CONSTRAINT `billing_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `order`

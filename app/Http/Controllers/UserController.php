@@ -1,7 +1,5 @@
 <?php
 
-
-// require('app/dependencies/PDOConnection.php');
 require_once('app/Http/Controllers/Controller.php');
 require('app/User.php');
 
@@ -19,16 +17,16 @@ class UserController
 	public function index()
 	{
 		$id = $_SESSION['userid'];
-		// header('Location: ../resources/views/home.php');
+		
 		if(!isset($_SESSION['user'])){
 			$this->config->route('Pharmacy/login');
 		}
 
 		$User = new User();
-		$data = $User->getUserInfo($id);
+
+		$data = $User->getInfoById($id);
 		
-		
-		$this->config->view('dashboard/userProfileView' , $data);	
+		$this->config->view('dashboard/profile' , $data);	
 	}
 	
 }

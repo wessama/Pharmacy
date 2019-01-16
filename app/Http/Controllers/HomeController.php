@@ -20,19 +20,21 @@ class HomeController
 		{
 			$this->config->route('Pharmacy/login');
 		}
+
 		$category = new Category();
 
-		$categories = $category->getCategories();
+		$data['categories'] = $category->getCategories();
 
-		$this->config->view('home', $categories);
+		$this->config->view('home', $data);
 	}
 
 	public function homePageSearch($searchString)
 	{
 		$category = new Category();
-		$categories = $category->searchCategories($searchString);
-		// var_dump($categories);
-		$this->config->view('home', $categories);
+		
+		$data['categories']= $category->searchCategories($searchString);
+		
+		$this->config->view('home', $data);
 	}
 
 }

@@ -10,21 +10,25 @@ class Role
 		$this->config = new Controller();
 	}
 
-	public function getUserTypeName($userId)
+	public function getUserRole($user_id)
 	{
 		$role = $this->config->getInstance();
+		
 		$query = $role->query("SELECT `displayName` 
 								FROM `role` 
 								INNER JOIN `user` 
 								ON role.id = user.role_id
-								WHERE user.id ='$userId'");
+								WHERE user.id ='$user_id'");
+
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
-	
-	public function getUserTypeNumber($userId)
+
+	public function getAllRoles()
 	{
-		$role = $this->config->getInstance();
-		$query = $role->query("SELECT `role_id` FROM `user` WHERE `id`='$userId'");
+		$Role = $this->config->getInstance();
+
+		$query = $Role->query("SELECT * FROM `role`");
+
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 

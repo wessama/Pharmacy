@@ -12,23 +12,28 @@ class Cart
 
 	}
 
-	public function orderInfoINCart($request){
+	public function placeOrderInfo($request){
 
+	
+		
 		$arrayOfIds = "".$request[0];
-         $cart =$this->config->getInstance();
+
+        $cart = $this->config->getInstance();
+        
          for ($i=1; $i <sizeof($request)-1 ; $i++) { 
 			$arrayOfIds .= ','.$request[$i];
 		 }
 		 
 		 
 		 $query = $cart->query("SELECT o.`orderPrice` ,o.`orderTotalPrice` ,o.`quantity` 
-		 							  ,p.price ,p.product_name ,p.product_name ,p.Product_description , p.product_image
+		 							  ,p.price ,p.product_name ,p.Product_description , p.product_image
 									   FROM `order` o 
 									   INNER JOIN `product`p 
 									   WHERE o.`product_id` 
 									   IN ('$arrayOfIds')");
 
 		return $query->fetchAll(PDO::FETCH_ASSOC);
+			
 	}
 	
 	

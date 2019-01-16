@@ -2,7 +2,7 @@
 
 $config = new Controller();
 
-$GLOBALS['ASSET'] = "../Pharmacy/";
+$GLOBALS['ASSET'] = "../../../Pharmacy/";
 
 $GLOBALS['home'] = "home";
 
@@ -14,12 +14,45 @@ $GLOBALS['product'] = "products";
 
 $GLOBALS['profile'] = "profile";
 
-$GLOBALS['ordersHistory'] = "ordersHistory";
+$GLOBALS['orderHistory'] = "orders";
 
-$GLOBALS['checkout'] = "checkout";
+$GLOBALS['Billing'] = "billing";
 
 $GLOBALS['addProduct'] = "Product/add";
 
+$GLOBALS['addNewProduct'] = "admin/product/add";
+
+$GLOBALS['submitProduct'] = "admin/product/add/submit";
+
+$GLOBALS['removeFromCart'] = "cart/remove";
+
+$GLOBALS['inventoryRequest'] = "admin/request/add";
+
+$GLOBALS['UserInformation'] = "admin/users";
+
+$GLOBALS['inventory'] = "admin/inventory";
+
+$GLOBALS['viewAllOrders'] = "admin/orders";
+
+
+
+/* Main routes */
+if($_SERVER['REQUEST_URI'] == '/Pharmacy/')
+{
+	$config->route('Pharmacy/home');
+}
+
+if(strpos($_SERVER['REQUEST_URI'], "admin") !== false){
+
+	if(!in_array("can_view_admin_panel", $_SESSION['permissions']))
+	{
+		$_SESSION['not_permitted'] = true;
+
+		$config->route('../Pharmacy/home');
+	}
+}
+
+/** Functional routes **/
 
 if($_SERVER['REQUEST_URI'] == '/Pharmacy/home')
 {
@@ -34,9 +67,14 @@ if($_SERVER['REQUEST_URI'] == '/Pharmacy/home')
 	}
 	else{
 		$HomeController->index();
+
+		if(isset($_SESSION['not_permitted']))
+		{
+			unset($_SESSION['not_permitted']);
+		}
+
 	}
 }
-
 else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/products") !== false)
 {
 	$config->getController('ProductController');
@@ -60,15 +98,6 @@ else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/products") !== false)
 		$ProductController->index($categoryid);
 	}
 }
-
-else if($_SERVER['REQUEST_URI'] == '/Pharmacy/register')
-{
-	$config->getController('RegisterController');
-	
-	$RegisterController = new RegisterController();
-	
-	$RegisterController->index();
-}
 else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/profile") !== false)
 {
 	$request = $_POST;
@@ -79,10 +108,8 @@ else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/profile") !== false)
 	
 	$UserController->index();	
 }
-else if(strpos($_SERVER['REQUEST_URI'], "/Pharmacy/ordersHistory") !== false)
+else if($_SERVER['REQUEST_URI'] == "/Pharmacy/orders")
 {
-	$request = $_POST;
-	
 	$config->getController('OrderHistoryController');
 	
 	$OrderHistoryController = new OrderHistoryController();
@@ -111,15 +138,15 @@ else if($_SERVER['REQUEST_URI'] == '/Pharmacy/login/submit')
 	$LoginController->logIn($request);
 		
 }
-else if($_SERVER['REQUEST_URI'] == '/Pharmacy/checkout/submit')
+else if($_SERVER['REQUEST_URI'] == '/Pharmacy/billing/submit')
 {
 	$request = $_POST;
 
-	$config->getController('CheckoutController');
+	$config->getController('BillingController');
 	
-	$CheckoutController = new CheckoutController();
+	$BillingController = new BillingController();
 	
-	$CheckoutController->store($request);
+	$BillingController->store($request);
 		
 }
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/login')
@@ -137,42 +164,123 @@ else if($_SERVER['REQUEST_URI'] == '/Pharmacy/logout')
 	$config->route('Pharmacy/home');
 	
 }
-
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/cart')
 {
 	$config->getController('CartController');
+
  	$cartController = new CartController();
-	  $cartController->addToCart();
+
+	$cartController->addToCart();
 	  
-	  if(isset($_POST['UpdateButton']))
-	{
-		$quantity = $_GET['quantity'];
-		$Productprice = $_GET['Productprice'];
-		$orderPrice = $_GET['orderPrice'];
-		$orderTotalPrice = $_GET['orderTotalPrice'];
-		$cartController->update($quantity,$Productprice,$orderPrice,$orderTotalPrice);
-	}
 }
-else if($_SERVER['REQUEST_URI'] == '/Pharmacy/checkout')
+else if($_SERVER['REQUEST_URI'] == '/Pharmacy/billing')
 {
-	$config->getController('CheckoutController');
- 	$checkoutController = new CheckoutController();
- 	$checkoutController->index();
+	$config->getController('BillingController');
+
+ 	$BillingController = new BillingController();
+
+ 	$BillingController->index();
 }
 else if($_SERVER['REQUEST_URI'] == '/Pharmacy/Product/add')
 {
-	$request=$_POST;
+	$request = $_POST;
 	
-	if(!in_array($request['product_id'], $_SESSION['cartProducts']))
-	{
-		$_SESSION['cartProducts'][] = $request['product_id'];
-	}
-	else
-	{ 
-		$message = "Product already exists in cart";
-		echo "<script type='text/javascript'>alert('$message');</script>";
+	if(isset($_SESSION['cart_empty_alert'])){
+		unset($_SESSION['cart_empty_alert']);
 	}
 	
-	 $config->route('products');
+	$_SESSION['cartProducts'][] = $request['product_id'];
+
+	$_SESSION['product_added_to_cart'] = true;
+	
+	$config->route('products'.'?category='.$_POST['category_id']);
 	
 }
+else if($_SERVER['REQUEST_URI'] == '/Pharmacy/admin/product/add'){
+
+	$config->getController('AdminController');
+
+ 	$AdminController = new AdminController();
+
+	$AdminController->addNewProduct();
+
+}
+else if($_SERVER['REQUEST_URI'] == '/Pharmacy/admin/product/add/submit'){
+
+	$request = $_POST;
+
+	$config->getController('AdminController');
+
+ 	$AdminController = new AdminController();
+
+	$AdminController->storeNewProduct($request);
+
+}
+else if($_SERVER['REQUEST_URI'] == '/Pharmacy/cart/remove'){
+
+	$request = $_POST;
+
+	$config->getController('CartController');
+
+ 	$CartController = new CartController();
+
+	$CartController->removeFromCart($request);
+
+}
+else if($_SERVER['REQUEST_URI'] == '/Pharmacy/admin/request/add')
+{
+	$request = $_POST;
+
+	$config->getController('RequestController');
+	
+	$RequestController = new RequestController();
+	
+	$RequestController->store($request);
+	
+}
+/* Admin routes */
+else if($_SERVER['REQUEST_URI'] == "/Pharmacy/admin/users")
+{
+	$config->getController('AdminController');
+	
+	$AdminController = new AdminController();
+	
+	$AdminController->viewAllUsers();	
+}
+else if($_SERVER['REQUEST_URI'] == "/Pharmacy/admin/inventory")
+{
+	$config->getController('AdminController');
+	
+	$AdminController = new AdminController();
+	
+	$AdminController->viewInventory();	
+}
+else if($_SERVER['REQUEST_URI'] == "/Pharmacy/admin/orders")
+{
+	$config->getController('AdminController');
+	
+	$AdminController = new AdminController();
+	
+	$AdminController->viewAllOrders();	
+}
+else if($_SERVER['REQUEST_URI'] == "/Pharmacy/admin/user/edit_role")
+{
+	$request = $_POST;
+
+	$config->getController('AdminController');
+	
+	$AdminController = new AdminController();
+	
+	$AdminController->editUserRole($request);	
+}
+else if($_SERVER['REQUEST_URI'] == "/Pharmacy/admin/order/edit_status")
+{
+	$request = $_POST;
+
+	$config->getController('AdminController');
+	
+	$AdminController = new AdminController();
+	
+	$AdminController->editOrderStatus($request);	
+}
+

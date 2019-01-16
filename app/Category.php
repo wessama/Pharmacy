@@ -14,11 +14,11 @@ class Category
 
 	public function getCategories(){
 
-		 $x =$this->config->getInstance();
+		 $query = $this->config->getInstance();
 
-		 $query = $x->query("SELECT * FROM `category`");
+		 $data = $query->query("SELECT * FROM `category`");
 
-		return $query->fetchAll(PDO::FETCH_ASSOC);
+		 return $data->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
 	public function searchCategories($searchString){
@@ -26,7 +26,7 @@ class Category
 		 $DBConnectionInstance =$this->config->getInstance();
 		 $columnName = "category";
 		 $tableName = "category";
-		 //return query
+
 		 $query = $this->config->getSearchResults($DBConnectionInstance , $tableName , $columnName , $searchString); 
 		 if (!is_null($query)) {
 			 return $query;
