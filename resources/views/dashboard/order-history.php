@@ -25,7 +25,6 @@ include('resources/views/layouts/layout.php');
     </div>
   </div>
 
-
 <?php
 include('resources/views/layouts/layout-end.php');
 ?>
